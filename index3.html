@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Skin Disease Detection</title>
+        <style>
+            body {
+                background-image: url('/static/bg2.jpg');
+                background-size: 100%;
+                background-repeat: repeat;
+                font-style: italic;
+                font-family: 'Cambria', 'Cochin', Georgia, Times, 'Times New Roman', serif;
+            }
+
+            .logo {
+                font-size: 72px;
+                color: #ffffff;
+                margin-bottom: 20px;
+                font-style: italic;
+                font-family: 'Cambria', 'Cochin', Georgia, Times, 'Times New Roman', serif;
+
+                overflow:hidden;
+                position: fixed;
+                top:0;
+                width: 100%;
+                background-color: rgb(28, 99, 97);
+                margin-top:0;
+            }
+
+            .vision-mission {
+
+                color: black;
+                padding: 40px;
+                text-align: center;
+                border-radius: 10px;
+                margin-top: 50px;
+            }
+
+            .vision h3,
+            .mission h3 {
+                color: #007BFF;
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+
+            .vision,
+            .mission {
+                font-size: 18px;
+                margin-bottom: 20px;
+                margin-left: 200px;
+                margin-right: 200px;
+            }
+
+            .footer {
+                background-color: #333;
+                color: #fff;
+                padding: 20px;
+                text-align: center;
+                margin-bottom: 0%;
+
+
+            }
+
+            .footer p:first-child {
+                font-size: 16px;
+                margin-bottom: 0px;
+
+            }
+
+            .footer p:last-child {
+                font-size: 20px;
+            }
+
+
+            .footer .fas {
+                font-size: 24px;
+                color: #FF5252;
+                margin: 0 5px;
+            }
+
+            .footer {
+                background-color: #333;
+                color: #fff;
+                padding: 10px 0;
+                text-align: center;
+
+                bottom: 0px;
+                width: 100%;
+            }
+
+            .footer p {
+                font-size: 16px;
+                margin: 5px;
+            }
+
+            .fas.fa-heart {
+                color: #FF5252;
+                font-size: 24px;
+                margin: 0 5px;
+            }
+
+            .dis {
+                color: black;
+                margin-left: 200px;
+                margin-right: 200px;
+                padding-top: 10%;
+            }
+
+            form {
+                margin: 20px;
+            }
+
+            #disease-description {
+                border: 2px solid;
+                margin-left: 100px;
+                /* also we can use width*/
+                margin-right: 100px;
+                font-size: 18px;
+                color: black;
+            }
+
+            #disease-tips {
+                border: 2px solid;
+                margin-left: 100px;
+                /* also we can use width*/
+                margin-right: 100px;
+                font-size: 18px;
+                color: black;
+            }
+
+            .disease-info {
+
+                margin-left: 200px;
+                margin-right: 200px;
+                color: #007BFF;
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+            input[type="file"]{
+                display: none;
+            }
+            label {
+           background-color: #007BFF;
+           color: #fff;
+           padding: 10px 20px;
+           border-radius: 5px;
+           cursor: pointer;
+           text-align: center;
+           display: block;
+           width: 100px;
+           margin: auto;
+       }
+       
+       input[type="file"] + label:hover {
+           background-color: #0056b3;
+       }
+       
+       input[type="file"]:focus + label {
+           box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+       }
+       input[type="submit"] {
+           background-color: #28a745;
+           color: #fff;
+           padding: 10px 20px;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           margin-top: 10px;
+       }
+       
+       input[type="submit"]:hover {
+           background-color: #218838;
+       }
+
+        </style>
+    </head>
+
+    <body>
+        <center>
+
+            <div class="logo">
+                 Skin Disease Detection 
+            </div>
+            <div class="dis">Skin disease detection is the process of identifying and diagnosing various skin conditions
+                and disorders, ranging from common issues like acne and rashes to more serious conditions such as skin
+                cancer. Healthcare professionals use visual examination and, in some cases, advanced technology to
+                assess skin health, enabling early intervention and effective treatment.</div>
+            <form action="/classify" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" id="img">
+                <label for="img">Select Image</label><br><br>
+                <input type="submit" value="Submit">
+            </form>
+            <div id="result">
+            </div>
+            <div id="image-container">
+                <img id="uploaded-image" style="max-width: 100%;" src="">
+
+            </div>
+            <div class="disease-info">
+                <h2>Disease Information</h2>
+                <b>-Description</b>
+                <p id="disease-description"></p>
+                <b>-Tips</b>
+                <p id="disease-tips"></p>
+            </div>
+            <div class="vision-mission">
+                <div class="vision">
+                    <h3>Vision</h3>
+                    <p>To provide accessible and reliable skin disease detection for a healthier world.</p>
+                </div>
+                <div class="mission">
+                    <h3>Mission</h3>
+                    <p>To provide accessible and reliable skin disease detection for a healthier world.</p>
+                </div>
+            </div>
+            </div>
+            <div class="footer">
+                <!--<p>Developed by: Jayesh Bhadane (Backend & Frontend Developer), Moreshwar Borse (Backend & Frontend
+                    Developer), Aashish Birhade (Frontend Developer) &copy; 2023</p>-->
+                <p><i class="fas fa-heart"></i> All rights reserved</p>
+            </div>
+
+
+            <script>
+                const form = document.querySelector('form');
+                const resultDiv = document.querySelector('#result');
+                const uploadedImage = document.querySelector('#uploaded-image');
+                const imageContainer = document.querySelector('#image-container');
+                const diseaseDescription = document.querySelector('#disease-description');
+                const diseaseTips = document.querySelector('#disease-tips');
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const formData = new FormData(form);
+
+                    try {
+                        const response = await fetch('/classify', {
+                            method: 'POST',
+                            body: formData,
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            const predictedClass = data.predicted_class;
+                            const confidence = data.confidence;
+
+                            resultDiv.innerHTML = `<p>Predicted Class: ${predictedClass}</p><p>Confidence: ${confidence}%</p>`;
+                            diseaseDescription.textContent = data.description;
+                            diseaseTips.textContent = data.tips;
+
+                            // Display the uploaded image
+                            const file = form.elements.file.files[0];
+                            const imageURL = URL.createObjectURL(file);
+                            uploadedImage.src = imageURL;
+                            imageContainer.style.display = 'block';
+                        } else {
+                            resultDiv.innerHTML = '<p>Error classifying the image.</p>';
+                            diseaseDescription.textContent = '';
+                            diseaseTips.textContent = '';
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        resultDiv.innerHTML = '<p>Error classifying the image.</p>';
+                        diseaseDescription.textContent = '';
+                        diseaseTips.textContent = '';
+                    }
+                });
+            </script>
+        </center>
+    </body>
+
+</html>
